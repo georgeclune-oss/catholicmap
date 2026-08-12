@@ -141,59 +141,75 @@
 <link rel="manifest" href="/site.webmanifest">
 </head>
 
-<body><body>
+<body>
 
 <div id="header"></div>
 
-<!-- FULLSCREEN HERO WITH ROTATING GLOBE -->
-<div id="globe-container"
-     style="position:absolute; top:0; left:0; width:100%; height:100vh; z-index:-1;">
-</div>
-
+<!-- Vatican-style hero section -->
 <section style="
-    height:100vh;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    padding:20px;
+    background: #FFFEE8;
+    padding: 60px 80px;
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
     font-family: Montserrat, sans-serif;
 ">
 
-    <!-- Vatican Coat of Arms -->
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Emblem_of_the_Holy_See.svg/800px-Emblem_of_the_Holy_See.svg.png"
-         alt="Vatican Coat of Arms"
-         style="width:150px; margin-bottom:25px; opacity:0.95;">
+    <!-- LEFT TEXT -->
+    <div style="
+        max-width: 520px;
+        margin-right: 60px;
+        z-index: 2;
+    ">
+        <h1 style="font-size: 3rem; font-weight: 700; color: #545000; margin-bottom: 20px;">
+            Global Catholic Church Mapping Project
+        </h1>
 
-    <h1 style="font-size:3rem; font-weight:700; color:#545000;">
-        Global Catholic Church Mapping Project
-    </h1>
+        <p style="font-size: 1.2rem; color: #545000; font-weight: 500; line-height: 1.6;">
+            A modern geographic platform mapping every Catholic church on Earth.
+            Built by Éirelytics with precision, clarity, and respect for heritage.
+        </p>
 
-    <p style="font-size:1.2rem; max-width:700px; color:#545000; margin-top:15px; font-weight:500;">
-        A modern geographic platform mapping every Catholic church on Earth.
-        Powered by Éirelytics.
-    </p>
+        <a href="worldchurches.html"
+           style="
+               display: inline-block;
+               margin-top: 30px;
+               padding: 15px 35px;
+               background: #E8DC00;
+               color: #545000;
+               font-weight: 700;
+               border-radius: 8px;
+               text-decoration: none;
+               font-size: 1.1rem;
+           ">
+            Enter Global Map
+        </a>
+    </div>
 
-    <a href="worldchurches.html"
-       style="
-           margin-top:35px;
-           padding:15px 35px;
-           background:#E8DC00;
-           color:#545000;
-           font-weight:700;
-           border-radius:8px;
-           text-decoration:none;
-           font-size:1.1rem;
-       ">
-        Enter Global Map
-    </a>
+    <!-- CENTERED BASILICA IMAGE (Vatican style) -->
+    <div style="
+        flex-shrink: 0;
+        position: relative;
+    ">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/St_Peter%27s_Basilica_facade%2C_2021.jpg"
+             alt="St. Peter’s Basilica"
+             style="
+                 width: 480px;
+                 max-width: 90vw;
+                 border-radius: 12px;
+                 opacity: 0.92;
+                 object-fit: cover;
+                 box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+             ">
+    </div>
 
 </section>
 
 <div id="footer"></div>
 
-<!-- LOAD HEADER + FOOTER -->
+<!-- Load header + footer -->
 <script>
 fetch("header.html")
   .then(r => r.text())
@@ -204,48 +220,7 @@ fetch("footer.html")
   .then(d => document.getElementById("footer").innerHTML = d);
 </script>
 
-<!-- THREE.JS GLOBE -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
-<script>
-    const container = document.getElementById('globe-container');
-
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(
-        75,
-        window.innerWidth / window.innerHeight,
-        0.1,
-        1000
-    );
-
-    const renderer = new THREE.WebGLRenderer({ alpha: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    container.appendChild(renderer.domElement);
-
-    const geometry = new THREE.SphereGeometry(5, 64, 64);
-    const texture = new THREE.TextureLoader().load(
-        "https://upload.wikimedia.org/wikipedia/commons/8/83/Equirectangular_projection_SW.jpg"
-    );
-    const material = new THREE.MeshBasicMaterial({ map: texture });
-    const globe = new THREE.Mesh(geometry, material);
-    scene.add(globe);
-
-    camera.position.z = 12;
-
-    function animate() {
-        requestAnimationFrame(animate);
-        globe.rotation.y += 0.002;
-        renderer.render(scene, camera);
-    }
-    animate();
-
-    window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-    });
-</script>
-
 </body>
+
 
 </html>
