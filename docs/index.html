@@ -141,68 +141,111 @@
 <link rel="manifest" href="/site.webmanifest">
 </head>
 
-<body>
+<body><body>
 
 <div id="header"></div>
-<div class="page-wrapper">
 
+<!-- FULLSCREEN HERO WITH ROTATING GLOBE -->
+<div id="globe-container"
+     style="position:absolute; top:0; left:0; width:100%; height:100vh; z-index:-1;">
+</div>
+
+<section style="
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:20px;
+    font-family: Montserrat, sans-serif;
+">
+
+    <!-- Vatican Coat of Arms -->
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Emblem_of_the_Holy_See.svg/800px-Emblem_of_the_Holy_See.svg.png"
+         alt="Vatican Coat of Arms"
+         style="width:150px; margin-bottom:25px; opacity:0.95;">
+
+    <h1 style="font-size:3rem; font-weight:700; color:#545000;">
+        Global Catholic Church Mapping Project
+    </h1>
+
+    <p style="font-size:1.2rem; max-width:700px; color:#545000; margin-top:15px; font-weight:500;">
+        A modern geographic platform mapping every Catholic church on Earth.
+        Powered by Éirelytics.
+    </p>
+
+    <a href="worldchurches.html"
+       style="
+           margin-top:35px;
+           padding:15px 35px;
+           background:#E8DC00;
+           color:#545000;
+           font-weight:700;
+           border-radius:8px;
+           text-decoration:none;
+           font-size:1.1rem;
+       ">
+        Enter Global Map
+    </a>
+
+</section>
+
+<div id="footer"></div>
+
+<!-- LOAD HEADER + FOOTER -->
 <script>
 fetch("header.html")
-  .then(response => response.text())
-  .then(data => {
-      document.getElementById("header").innerHTML = data;
-  });
+  .then(r => r.text())
+  .then(d => document.getElementById("header").innerHTML = d);
 
 fetch("footer.html")
   .then(r => r.text())
   .then(d => document.getElementById("footer").innerHTML = d);
 </script>
 
-<h2 class="section-title">Global Maps</h2>
+<!-- THREE.JS GLOBE -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-<div class="grid">
+<script>
+    const container = document.getElementById('globe-container');
 
-    <div class="card" onclick="window.location='airports-map.html'">
-        <h3>All Airports in the World Map</h3>
-        <p>See every airport on Earth on an interactive map.</p>
-    </div>
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+    );
 
-    <div class="card" onclick="window.location='spaceports-map.html'">
-        <h3>All Spaceports in the World Map</h3>
-        <p>See every spaceport on Earth on an interactive map.</p>
-    </div>
+    const renderer = new THREE.WebGLRenderer({ alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    container.appendChild(renderer.domElement);
 
-    <div class="card" onclick="window.location='f1-tracks-map.html'">
-        <h3>All F1 Tracks in the World Map</h3>
-        <p>Explore every Formula 1 circuit on an interactive map.</p>
-    </div>
+    const geometry = new THREE.SphereGeometry(5, 64, 64);
+    const texture = new THREE.TextureLoader().load(
+        "https://upload.wikimedia.org/wikipedia/commons/8/83/Equirectangular_projection_SW.jpg"
+    );
+    const material = new THREE.MeshBasicMaterial({ map: texture });
+    const globe = new THREE.Mesh(geometry, material);
+    scene.add(globe);
 
-</div>
+    camera.position.z = 12;
 
-<h2 class="section-title">Country Specific Maps</h2>
+    function animate() {
+        requestAnimationFrame(animate);
+        globe.rotation.y += 0.002;
+        renderer.render(scene, camera);
+    }
+    animate();
 
-<div class="grid">
-    <div class="card" onclick="window.location='ireland-churches.html'">
-        <h3>All Churches in Ireland Map</h3>
-        <p>View every church on an interactive map.</p>
-    </div>
+    window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+</script>
 
-    <div class="card" onclick="window.location='ireland-abandoned.html'">
-        <h3>All Abandoned Places in Ireland Map</h3>
-        <p>View all abandoned places in Ireland.</p>
-    </div>
-
-        <div class="card" onclick="window.location='ireland-castles.html'">
-        <h3>All Castles in Ireland Map</h3>
-        <p>View all castles in Ireland</p>
-    </div>
-</div>
-
-
-
-
-
-</div>
-    <div id="footer"></div>
 </body>
+
 </html>
