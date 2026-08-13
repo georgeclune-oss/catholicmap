@@ -153,15 +153,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
+    gap: 60px;
     font-family: Montserrat, sans-serif;
 ">
 
     <!-- LEFT TEXT -->
     <div style="
         max-width: 520px;
-        margin-right: 60px;
-        z-index: 2;
+        flex: 1;
     ">
         <h1 style="font-size: 3rem; font-weight: 700; color: #545000; margin-bottom: 20px;">
             Global Catholic Church Mapping Project
@@ -188,17 +187,17 @@
         </a>
     </div>
 
-    <!-- CENTERED BASILICA IMAGE (Vatican style) -->
+    <!-- CENTERED BASILICA IMAGE (exact Vatican style) -->
     <div style="
-        flex-shrink: 0;
-        position: relative;
+        flex: 1;
+        display: flex;
+        justify-content: center;
     ">
-        <img src=https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/St_Peter%27s_Basilica_facade%2C_2021.jpg/1200px-St_Peter%27s_Basilica_facade%2C_2021.jpg
-"
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/St_Peter%27s_Basilica_facade%2C_2021.jpg/1200px-St_Peter%27s_Basilica_facade%2C_2021.jpg"
              alt="St. Peter’s Basilica"
              style="
-                 width: 480px;
-                 max-width: 90vw;
+                 width: 520px;
+                 max-width: 100%;
                  border-radius: 12px;
                  opacity: 0.92;
                  object-fit: cover;
@@ -222,6 +221,7 @@ fetch("footer.html")
 </script>
 
 </body>
+
 
 
 </html>
