@@ -141,76 +141,71 @@
 <link rel="manifest" href="/site.webmanifest">
 </head>
 
-<body>
+    <body>
 
 <div id="header"></div>
 
-<!-- Vatican-style hero section -->
+<!-- FULL-WIDTH IMAGE HERO -->
+<section style="
+    width: 100%;
+    margin: 0;
+    padding: 0;
+">
+
+    <!-- Full-width Basilica image -->
+    <img src="yoo.jpg"
+         alt="St. Peter’s Basilica"
+         style="
+             width: 100%;
+             height: auto;
+             display: block;
+             object-fit: cover;
+         ">
+</section>
+
+<!-- TEXT UNDER IMAGE -->
 <section style="
     background: #FFFEE8;
-    padding: 60px 80px;
-    min-height: 85vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 70px;
+    padding: 50px 30px;
+    text-align: center;
     font-family: Montserrat, sans-serif;
 ">
 
-    <!-- LEFT TEXT -->
-    <div style="
-        max-width: 520px;
-        flex: 1;
+    <h1 style="font-size: 3rem; font-weight: 700; color: #545000; margin-bottom: 20px;">
+        Global Catholic Church Mapping Project
+    </h1>
+
+    <p style="
+        font-size: 1.2rem;
+        color: #545000;
+        font-weight: 500;
+        max-width: 800px;
+        margin: 0 auto;
+        line-height: 1.6;
     ">
-        <h1 style="font-size: 3rem; font-weight: 700; color: #545000; margin-bottom: 20px;">
-            Global Catholic Church Mapping Project
-        </h1>
+        A modern geographic platform mapping every Catholic church on Earth.
+        Built by Éirelytics with precision, clarity, and respect for heritage.
+    </p>
 
-        <p style="font-size: 1.2rem; color: #545000; font-weight: 500; line-height: 1.6;">
-            A modern geographic platform mapping every Catholic church on Earth.
-            Built by Éirelytics with precision, clarity, and respect for heritage.
-        </p>
-
-        <a href="worldchurches.html"
-           style="
-               display: inline-block;
-               margin-top: 30px;
-               padding: 15px 35px;
-               background: #E8DC00;
-               color: #545000;
-               font-weight: 700;
-               border-radius: 8px;
-               text-decoration: none;
-               font-size: 1.1rem;
-           ">
-            Enter Global Map
-        </a>
-    </div>
-
-    <!-- CENTERED BASILICA IMAGE (matches Pope Leo XIV layout) -->
-    <div style="
-        flex: 1;
-        display: flex;
-        justify-content: center;
-    ">
-        <img src="yoo.jpg"
-     alt="ng"
-     style="
-         width: 520px;
-         max-width: 100%;
-         border-radius: 12px;
-         opacity: 0.92;
-         object-fit: cover;
-         box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-     ">
-
-    </div>
+    <a href="worldchurches.html"
+       style="
+           display: inline-block;
+           margin-top: 30px;
+           padding: 15px 35px;
+           background: #E8DC00;
+           color: #545000;
+           font-weight: 700;
+           border-radius: 8px;
+           text-decoration: none;
+           font-size: 1.1rem;
+       ">
+        Enter Global Map
+    </a>
 
 </section>
 
 <div id="footer"></div>
 
-<!-- Load header + footer -->
 <script>
 fetch("header.html")
   .then(r => r.text())
@@ -222,6 +217,7 @@ fetch("footer.html")
 </script>
 
 </body>
+
 
 
 
