@@ -76,34 +76,36 @@ nav {
     width: 100%;
     background: #C9BF00;
     color: white;
-   padding: 5px 30px;
+
+    padding: 5px 30px;
+
     display: flex;
-    justify-content: flex-start;
-    padding-left: 770px; 
+    justify-content: space-between; /* ← MATCH HEADER */
     align-items: center;
+
     box-sizing: border-box;
 
-position: fixed;
-    top: 90px; /* height of your header */
+    position: fixed;
+    position: sticky;
+    top: 0; /* attaches nav to the header */
     left: 0;
-    width: 100%;
     z-index: 998;
 }
 
 
-.nav-left {
-    flex: 0; /* behaves like the title */
-}
 
+.nav-left {
+    flex: 1; 
+}
 
 .nav-right {
-    flex: 1;
-    min-width: 180px;   /* SAME as search bar */
-    max-width: 260px;   /* SAME as search bar focus width */
-    display: flex;
-    justify-content: flex-end;
-    gap: 25px;
+    flex: 1; 
 }
+
+
+
+
+
 
 
 nav a {
@@ -200,10 +202,18 @@ footer {
 
     <nav>
     <div class="nav-left"></div> <!-- empty -->
+   <div class="nav-right">
+        
+       
+    </div>
+
+    <div class="nav-left"></div>
     <div class="nav-right">
         <a href="index.html">Home</a>
         <a href="data-licensing.html">Data Licensing</a>
     </div>
+
+
 </nav>
 
 
