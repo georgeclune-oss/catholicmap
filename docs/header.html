@@ -5,6 +5,7 @@ body {
     margin: 0;
     font-family: Montserrat, sans-serif;
     background: #FFFEE8;
+ padding-top: 90px;
 }
 
 /* Make ONLY h1 + h2 dark blue */
@@ -23,7 +24,6 @@ h1, h2, h3 {
     width: auto;
 }
 
-/* HEADER BAR */
 .header-container {
     background: #E8DC00;
     color: white;
@@ -33,7 +33,13 @@ h1, h2, h3 {
     justify-content: space-around;
     flex-wrap: wrap;
     text-align: center;
+position: fixed;   /* <— THIS makes it stay at the top */
+    top: 0; 
+width: 100%; 
+z-index: 999;
 }
+
+
 
 
 .site-title {
@@ -76,6 +82,12 @@ nav {
     padding-left: 770px; 
     align-items: center;
     box-sizing: border-box;
+
+position: fixed;
+    top: 90px; /* height of your header */
+    left: 0;
+    width: 100%;
+    z-index: 998;
 }
 
 
