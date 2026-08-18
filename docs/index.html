@@ -145,72 +145,66 @@
 
 <div id="header"></div>
 
-<!-- FULL-WIDTH IMAGE HERO -->
-<section style="
+<!-- FULL-WIDTH HERO WITH TEXT ON TOP -->
+<div style="
+    position: relative;
     width: 100%;
-    margin: 0;
-    padding: 0;
-">
-
-    <div style="
-    width: 100%;
-    height:300px;   /* change this to crop more or less */
+    height: 350px;   /* adjust for more/less crop */
     overflow: hidden;
 ">
+
+    <!-- Background Image -->
     <img src="yoo.jpg"
          alt="St. Peter’s Basilica"
          style="
              width: 100%;
              height: 100%;
              object-fit: cover;
-             object-position: center; /* crop evenly top + bottom */
-        filter: brightness(2.5) saturate(0.4);
-        opacity: 0.425;
-
+             object-position: center 40%;
              display: block;
+
+             /* White fade + transparency */
+             filter: brightness(1.35) saturate(0.75);
+             opacity: 0.80;
          ">
-</div>
-
-</section>
-
-<!-- TEXT UNDER IMAGE -->
-<section style="
-    background: #FFFEE8;
-    padding: 50px 30px;
-    text-align: center;
-    font-family: Montserrat, sans-serif;
-">
-
-    <h1 style="font-size: 3rem; font-weight: 700; color: #545000; margin-bottom: 20px;">
-        Global Catholic Church Mapping Project
-    </h1>
-
-    <p style="
-        font-size: 1.2rem;
-        color: #545000;
-        font-weight: 500;
-        max-width: 800px;
-        margin: 0 auto;
-        line-height: 1.6;
+    
+    <!-- TEXT ON TOP -->
+    <div style="
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: #ffffff;
+        font-family: Montserrat, sans-serif;
+        text-shadow: 0 2px 6px rgba(0,0,0,0.4);
+        width: 90%;
     ">
-        A modern geographic platform mapping every Catholic church on Earth.
-        Built by Éirelytics with precision, clarity, and respect for heritage.
-    </p>
+        <h1 style="font-size: 3rem; font-weight: 700; margin-bottom: 10px;">
+            Global Catholic Church Mapping Project
+        </h1>
 
-    <a href="worldchurches.html"
-       style="
-           display: inline-block;
-           margin-top: 30px;
-           padding: 15px 35px;
-           background: #E8DC00;
-           color: #545000;
-           font-weight: 700;
-           border-radius: 8px;
-           text-decoration: none;
-           font-size: 1.1rem;
-       ">
-        Enter Global Map
-    </a>
+        <p style="font-size: 1.2rem; font-weight: 500; margin-bottom: 20px;">
+            Mapping every Catholic church on Earth with precision and respect.
+        </p>
+
+        <a href="worldchurches.html"
+           style="
+               display: inline-block;
+               padding: 12px 30px;
+               background: rgba(255,255,255,0.85);
+               color: #545000;
+               font-weight: 700;
+               border-radius: 8px;
+               text-decoration: none;
+               font-size: 1.1rem;
+               backdrop-filter: blur(4px);
+           ">
+            Enter Global Map
+        </a>
+    </div>
+
+</div>
 
 </section>
 
