@@ -33,12 +33,19 @@ h1, h2, h3 {
     justify-content: space-around;
     flex-wrap: wrap;
     text-align: center;
-position: fixed;   /* <— THIS makes it stay at the top */
+position: relative;   /* <— THIS makes it stay at the top */
     top: 0; 
 width: 100%; 
 z-index: 999;
 }
 
+
+.header-wrapper {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+}
 
 
 
@@ -77,8 +84,8 @@ nav {
     background: #C9BF00;
     color: white;
 
-    padding: 5px 30px;
-
+   padding: 5px;
+   padding-left: 60px;
     display: flex;
     justify-content: space-between; /* ← MATCH HEADER */
     align-items: center;
@@ -180,7 +187,7 @@ footer {
 
 
 </style>
-
+<div class="header-wrapper">
 <div class="header-container">
 
     <div class="left-header">
@@ -210,13 +217,12 @@ footer {
     <div class="nav-left"></div>
     <div class="nav-right">
         <a href="index.html">Home</a>
-        <a href="data-licensing.html">Data Licensing</a>
     </div>
 
 
 </nav>
 
-
+</div>
 
 <script>
 function performSearch() {
