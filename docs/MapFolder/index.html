@@ -286,30 +286,46 @@ map.on('click', function() {
         
 
   // --- STYLE FUNCTION (visited + unvisited colours) ---
-function style_Churches_3_0(feature) {
-    const isVisited = getVisited().includes(feature.properties.fid);
-
+function style_Churches_3_0(feature, state = "normal") {
     return {
         pane: 'pane_Churches_3',
-        radius: 5.2,
+        radius: getMarkerSize(feature, state),
         opacity: 1,
-
-        // OUTLINE COLOUR
-        color: isVisited ? "#006600" : "#7a0000",   // dark green vs dark red
-
-        dashArray: '',
-        lineCap: 'butt',
-        lineJoin: 'miter',
+        color: getMarkerOutline(feature, state),
         weight: 2.0,
-
         fill: true,
         fillOpacity: 1,
-
-        // FILL COLOUR
-        fillColor: isVisited ? "#00cc44" : "#bb1a24",  // green vs your original red
-
+        fillColor: getMarkerColor(feature, state),
         interactive: true,
     };
+}
+
+
+			function getMarkerSize(feature, state) {
+    // state = "normal", "hover", "active"
+    if (state === "hover") return 7.5;
+    if (state === "active") return 8.5;
+    return 5.2; // normal
+}
+
+function getMarkerColor(feature, state) {
+    const visited = getVisited().includes(feature.properties.fid);
+
+    if (state === "active") {
+        return visited ? "#00ff55" : "#ff4455"; // brighter when active
+    }
+
+    return visited ? "#00cc44" : "#bb1a24"; // normal fill
+}
+
+function getMarkerOutline(feature, state) {
+    const visited = getVisited().includes(feature.properties.fid);
+
+    if (state === "active") {
+        return visited ? "#009933" : "#aa0000"; // darker outline when active
+    }
+
+    return visited ? "#006600" : "#7a0000"; // normal outline
 }
 
 
@@ -328,18 +344,39 @@ var layer_Churches_3 = new L.geoJson(json_Churches_3, {
 
     // --- CUSTOM CLICK HANDLER ---
     onEachFeature: function(feature, layer) {
+		layer.on("mouseover", function() {
+    layer.setStyle(style_Churches_3_0(feature, "hover"));
+});
+
+layer.on("mouseout", function() {
+    // If this marker is the active one, keep it big
+    if (window.activeChurch === feature.properties.fid) {
+        layer.setStyle(style_Churches_3_0(feature, "active"));
+    } else {
+        layer.setStyle(style_Churches_3_0(feature, "normal"));
+    }
+});
+
 layer.on("click", function() {
 
-    // Slide panel down first
+    // Close panel first
     document.getElementById("infoPanel").style.bottom = "-400px";
+
+    // Reset all markers to normal
+    layer_Churches_3.eachLayer(function(l) {
+        l.setStyle(style_Churches_3_0(l.feature, "normal"));
+    });
+
+    // Mark this one as active
+    window.activeChurch = feature.properties.fid;
+    layer.setStyle(style_Churches_3_0(feature, "active"));
 
     setTimeout(() => {
 
-        // Update your existing fields
+        // Update panel fields (your existing code)
         document.getElementById("churchName").innerText =
             feature.properties.name || "Unnamed Church";
 
-        // Diocese + parish
         const diocese = feature.properties.diocese_min;
         const parish = feature.properties.parish_min;
 
@@ -349,12 +386,18 @@ layer.on("click", function() {
         document.getElementById("churchParish").innerText =
             parish ? `Parish: ${parish}` : "Parish: Unknown";
 
-        // Button text
         if (getVisited().includes(feature.properties.fid)) {
             document.getElementById("visitBtn").innerText = "Mark as unvisited";
         } else {
             document.getElementById("visitBtn").innerText = "Mark as visited";
         }
+
+        // Slide panel up
+        document.getElementById("infoPanel").style.bottom = "0px";
+
+    }, 150);
+});
+
 
         // --- VISIT TOGGLE ---
         document.getElementById("visitBtn").onclick = () => {
@@ -396,6 +439,15 @@ layer.on("click", function() {
 
 bounds_group.addLayer(layer_Churches_3);
 map.addLayer(layer_Churches_3);
+			map.on("click", function() {
+    document.getElementById("infoPanel").style.bottom = "-400px";
+    window.activeChurch = null;
+
+    layer_Churches_3.eachLayer(function(l) {
+        l.setStyle(style_Churches_3_0(l.feature, "normal"));
+    });
+});
+
 </script>
 
 <div id="infoPanel" style="
