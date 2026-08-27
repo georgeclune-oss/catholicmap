@@ -37,26 +37,7 @@
 </style>
 
         <title></title>
-    </head>
-    <div id="infoPanel" style="
-    position: fixed;
-    bottom: -400px;
-    left: 0;
-    right: 0;
-    background: white;
-    padding: 30px;
-    border-top: 2px solid #ccc;
-    transition: bottom 0.3s ease;
-    z-index: 9999;
-">
-    <h2 id="churchName"></h2>
-
-    <button id="visitBtn">Mark as visited</button>
-    <button id="directionsBtn">Directions</button>
-
-    <div id="churchDiocese" style="margin-top: 12px; font-size: 16px;"></div>
-    <div id="churchParish" style="margin-top: 4px; font-size: 16px;"></div>
-</div>
+    
 
     <body>
         <div id="map">
@@ -416,5 +397,26 @@ layer.on("click", function() {
 bounds_group.addLayer(layer_Churches_3);
 map.addLayer(layer_Churches_3);
 </script>
-    </body>
+
+<div id="infoPanel" style="
+    position: fixed;
+    bottom: -400px;
+    left: 0;
+    right: 0;
+    background: white;
+    padding: 30px;
+    border-top: 2px solid #ccc;
+    transition: bottom 0.3s ease;
+    z-index: 9999;
+">
+    <h2 id="churchName"></h2>
+
+    <button id="visitBtn">Mark as visited</button>
+    <button id="directionsBtn">Directions</button>
+
+    <div id="churchDiocese" style="margin-top: 12px; font-size: 16px;"></div>
+    <div id="churchParish" style="margin-top: 4px; font-size: 16px;"></div>
+</div>
+
+</body>
 </html>
