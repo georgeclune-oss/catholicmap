@@ -218,6 +218,9 @@ function visitedColor(fid) {
   }
 );
 
+map.on('click', function() {
+    document.getElementById('infoPanel').style.bottom = "-400px";
+});
 
         layer_Positron_0;
         map.addLayer(layer_Positron_0);
@@ -344,14 +347,18 @@ var layer_Churches_3 = new L.geoJson(json_Churches_3, {
 
     // --- CUSTOM CLICK HANDLER ---
     onEachFeature: function(feature, layer) {
+layer.on("click", function() {
 
-        layer.on("click", function() {
+    // Slide panel down first
+    document.getElementById("infoPanel").style.bottom = "-400px";
 
-            // Name
-            document.getElementById("churchName").innerText =
-                feature.properties.name || "Unnamed Church";
+    setTimeout(() => {
 
-            // Diocese + parish
+        // Update your existing fields
+        document.getElementById("churchName").innerText =
+            feature.properties.name || "Unnamed Church";
+
+        // Diocese + parish
             const diocese = feature.properties.diocese_min;
             const parish = feature.properties.parish_min;
 
@@ -385,7 +392,16 @@ var layer_Churches_3 = new L.geoJson(json_Churches_3, {
                     getVisited().includes(feature.properties.fid)
                         ? "Mark as unvisited"
                         : "Mark as visited";
-            };
+        
+
+        // Slide panel up again
+        document.getElementById("infoPanel").style.bottom = "0px";
+
+    }, 150); // small delay for smooth animation
+});
+
+
+            
 
             // Directions
             document.getElementById("directionsBtn").onclick = () => {
