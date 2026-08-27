@@ -413,19 +413,7 @@ var layer_Churches_3 = new L.geoJson(json_Churches_3, {
     }
 });
 
-bounds_group.addLayer(layer_Churches_3);
-map.addLayer(layer_Churches_3);
 
-
-// --- RESET WHEN CLICKING EMPTY MAP ---
-map.on("click", function() {
-    document.getElementById("infoPanel").style.bottom = "-400px";
-    window.activeChurch = null;
-
-    layer_Churches_3.eachLayer(function(l) {
-        l.setStyle(style_Churches_3_0(l.feature, "normal"));
-    });
-});
 
 
 bounds_group.addLayer(layer_Churches_3);
