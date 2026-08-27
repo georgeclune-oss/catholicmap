@@ -404,14 +404,13 @@ layer.on("click", function() {
         // Slide panel UP again (correct place)
         document.getElementById("infoPanel").style.bottom = "0px";
 
-    }, 150); // small delay for smooth animation
-});
-
-
-    // --- MARKER SHAPE ---
-    pointToLayer: function (feature, latlng) {
-        return L.circleMarker(latlng, style_Churches_3_0(feature));
+    }, 150);
+        });
     },
+
+    pointToLayer: function(feature, latlng) {
+        return L.circleMarker(latlng, style_Churches_3_0(feature));
+    }
 });
 
 bounds_group.addLayer(layer_Churches_3);
