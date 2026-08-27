@@ -285,11 +285,11 @@ map.on('click', function() {
         map.addLayer(layer_Parish_2);
         
 
-  // --- STYLE FUNCTION (visited + unvisited colours) ---
+// --- STYLE FUNCTION (visited + unvisited colours) ---
 function style_Churches_3_0(feature, state = "normal") {
     return {
         pane: 'pane_Churches_3',
-        radius: getMarkerSize(feature, state),
+        radius: getMarkerSize(state),
         opacity: 1,
         color: getMarkerOutline(feature, state),
         weight: 2.0,
@@ -300,81 +300,22 @@ function style_Churches_3_0(feature, state = "normal") {
     };
 }
 
-
-			function getMarkerSize(feature, state) {
-    // state = "normal", "hover", "active"
+function getMarkerSize(state) {
     if (state === "hover") return 7.5;
     if (state === "active") return 8.5;
-    return 5.2; // normal
+    return 5.2;
 }
 
 function getMarkerColor(feature, state) {
     const visited = getVisited().includes(feature.properties.fid);
-
-    if (state === "active") {
-        return visited ? "#00ff55" : "#ff4455"; // brighter when active
-    }
-
-    return visited ? "#00cc44" : "#bb1a24"; // normal fill
+    if (state === "active") return visited ? "#00ff55" : "#ff4455";
+    return visited ? "#00cc44" : "#bb1a24";
 }
 
 function getMarkerOutline(feature, state) {
     const visited = getVisited().includes(feature.properties.fid);
-
-    if (state === "active") {
-        return visited ? "#009933" : "#aa0000"; // darker outline when active
-    }
-
-    return visited ? "#006600" : "#7a0000"; // normal outline
-}
-
-
-// --- CHURCHES LAYER ---
-map.createPane('pane_Churches_3');
-map.getPane('pane_Churches_3').style.zIndex = 403;
-map.getPane('pane_Churches_3').style['mix-blend-mode'] = 'normal';
-
-  // --- STYLE FUNCTION (visited + unvisited colours) ---
-function style_Churches_3_0(feature, state = "normal") {
-    return {
-        pane: 'pane_Churches_3',
-        radius: getMarkerSize(feature, state),
-        opacity: 1,
-        color: getMarkerOutline(feature, state),
-        weight: 2.0,
-        fill: true,
-        fillOpacity: 1,
-        fillColor: getMarkerColor(feature, state),
-        interactive: true,
-    };
-}
-
-
-			function getMarkerSize(feature, state) {
-    // state = "normal", "hover", "active"
-    if (state === "hover") return 7.5;
-    if (state === "active") return 8.5;
-    return 5.2; // normal
-}
-
-function getMarkerColor(feature, state) {
-    const visited = getVisited().includes(feature.properties.fid);
-
-    if (state === "active") {
-        return visited ? "#00ff55" : "#ff4455"; // brighter when active
-    }
-
-    return visited ? "#00cc44" : "#bb1a24"; // normal fill
-}
-
-function getMarkerOutline(feature, state) {
-    const visited = getVisited().includes(feature.properties.fid);
-
-    if (state === "active") {
-        return visited ? "#009933" : "#aa0000"; // darker outline when active
-    }
-
-    return visited ? "#006600" : "#7a0000"; // normal outline
+    if (state === "active") return visited ? "#009933" : "#aa0000";
+    return visited ? "#006600" : "#7a0000";
 }
 
 
@@ -386,98 +327,84 @@ map.getPane('pane_Churches_3').style['mix-blend-mode'] = 'normal';
 var layer_Churches_3 = new L.geoJson(json_Churches_3, {
     attribution: '',
     interactive: true,
-
     dataVar: 'json_Churches_3',
     layerName: 'layer_Churches_3',
     pane: 'pane_Churches_3',
 
-    // --- CUSTOM CLICK HANDLER ---
     onEachFeature: function(feature, layer) {
-		layer.on("mouseover", function() {
-    layer.setStyle(style_Churches_3_0(feature, "hover"));
-});
 
-layer.on("mouseout", function() {
-    // If this marker is the active one, keep it big
-    if (window.activeChurch === feature.properties.fid) {
-        layer.setStyle(style_Churches_3_0(feature, "active"));
-    } else {
-        layer.setStyle(style_Churches_3_0(feature, "normal"));
-    }
-});
+        // --- HOVER ---
+        layer.on("mouseover", function() {
+            layer.setStyle(style_Churches_3_0(feature, "hover"));
+        });
 
-layer.on("click", function() {
-
-    // Close panel first
-    document.getElementById("infoPanel").style.bottom = "-400px";
-
-    // Reset all markers to normal
-    layer_Churches_3.eachLayer(function(l) {
-        l.setStyle(style_Churches_3_0(l.feature, "normal"));
-    });
-
-    // Mark this one as active
-    window.activeChurch = feature.properties.fid;
-    layer.setStyle(style_Churches_3_0(feature, "active"));
-
-    setTimeout(() => {
-
-        // Update panel fields (your existing code)
-        document.getElementById("churchName").innerText =
-            feature.properties.name || "Unnamed Church";
-
-        const diocese = feature.properties.diocese_min;
-        const parish = feature.properties.parish_min;
-
-        document.getElementById("churchDiocese").innerText =
-            diocese ? `Diocese: ${diocese}` : "Diocese: Unknown";
-
-        document.getElementById("churchParish").innerText =
-            parish ? `Parish: ${parish}` : "Parish: Unknown";
-
-        if (getVisited().includes(feature.properties.fid)) {
-            document.getElementById("visitBtn").innerText = "Mark as unvisited";
-        } else {
-            document.getElementById("visitBtn").innerText = "Mark as visited";
-        }
-
-        // Slide panel up
-        document.getElementById("infoPanel").style.bottom = "0px";
-
-    }, 150);
-});
-
-
-        // --- VISIT TOGGLE ---
-        document.getElementById("visitBtn").onclick = () => {
-
-            if (getVisited().includes(feature.properties.fid)) {
-                unvisit(feature.properties.fid);
+        layer.on("mouseout", function() {
+            if (window.activeChurch === feature.properties.fid) {
+                layer.setStyle(style_Churches_3_0(feature, "active"));
             } else {
-                markVisited(feature.properties.fid);
+                layer.setStyle(style_Churches_3_0(feature, "normal"));
             }
+        });
 
-            // FULL STYLE UPDATE (fill + outline)
-            layer.setStyle(style_Churches_3_0(feature));
+        // --- CLICK ---
+        layer.on("click", function() {
 
-            // Update button text
-            document.getElementById("visitBtn").innerText =
-                getVisited().includes(feature.properties.fid)
-                    ? "Mark as unvisited"
-                    : "Mark as visited";
-        };
+            // Close panel first
+            document.getElementById("infoPanel").style.bottom = "-400px";
 
-        // Directions
-        document.getElementById("directionsBtn").onclick = () => {
-            let lat = feature.geometry.coordinates[1];
-            let lng = feature.geometry.coordinates[0];
-            window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`);
-        };
+            // Reset all markers
+            layer_Churches_3.eachLayer(function(l) {
+                l.setStyle(style_Churches_3_0(l.feature, "normal"));
+            });
 
-        // Slide panel UP again (correct place)
-        document.getElementById("infoPanel").style.bottom = "0px";
+            // Mark this one active
+            window.activeChurch = feature.properties.fid;
+            layer.setStyle(style_Churches_3_0(feature, "active"));
 
-    }, 150);
+            setTimeout(() => {
+
+                // Update panel fields
+                document.getElementById("churchName").innerText =
+                    feature.properties.name || "Unnamed Church";
+
+                const diocese = feature.properties.diocese_min;
+                const parish = feature.properties.parish_min;
+
+                document.getElementById("churchDiocese").innerText =
+                    diocese ? `Diocese: ${diocese}` : "Diocese: Unknown";
+
+                document.getElementById("churchParish").innerText =
+                    parish ? `Parish: ${parish}` : "Parish: Unknown";
+
+                // Visit toggle
+                document.getElementById("visitBtn").onclick = () => {
+
+                    if (getVisited().includes(feature.properties.fid)) {
+                        unvisit(feature.properties.fid);
+                    } else {
+                        markVisited(feature.properties.fid);
+                    }
+
+                    // Keep active style
+                    layer.setStyle(style_Churches_3_0(feature, "active"));
+
+                    document.getElementById("visitBtn").innerText =
+                        getVisited().includes(feature.properties.fid)
+                            ? "Mark as unvisited"
+                            : "Mark as visited";
+                };
+
+                // Directions
+                document.getElementById("directionsBtn").onclick = () => {
+                    let lat = feature.geometry.coordinates[1];
+                    let lng = feature.geometry.coordinates[0];
+                    window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`);
+                };
+
+                // Slide panel up
+                document.getElementById("infoPanel").style.bottom = "0px";
+
+            }, 150);
         });
     },
 
@@ -488,7 +415,10 @@ layer.on("click", function() {
 
 bounds_group.addLayer(layer_Churches_3);
 map.addLayer(layer_Churches_3);
-			map.on("click", function() {
+
+
+// --- RESET WHEN CLICKING EMPTY MAP ---
+map.on("click", function() {
     document.getElementById("infoPanel").style.bottom = "-400px";
     window.activeChurch = null;
 
@@ -497,30 +427,6 @@ map.addLayer(layer_Churches_3);
     });
 });
 
-</script>
-
-<div id="infoPanel" style="
-    position: fixed;
-    bottom: -400px;
-    left: 0;
-    right: 0;
-    background: white;
-    padding: 30px;
-    border-top: 2px solid #ccc;
-    transition: bottom 0.3s ease;
-    z-index: 9999;
-">
-    <h2 id="churchName"></h2>
-
-    <button id="visitBtn">Mark as visited</button>
-    <button id="directionsBtn">Directions</button>
-
-    <div id="churchDiocese" style="margin-top: 12px; font-size: 16px;"></div>
-    <div id="churchParish" style="margin-top: 4px; font-size: 16px;"></div>
-</div>
-
-</body>
-</html>
 
 bounds_group.addLayer(layer_Churches_3);
 map.addLayer(layer_Churches_3);
