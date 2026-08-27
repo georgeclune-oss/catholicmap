@@ -334,6 +334,55 @@ map.createPane('pane_Churches_3');
 map.getPane('pane_Churches_3').style.zIndex = 403;
 map.getPane('pane_Churches_3').style['mix-blend-mode'] = 'normal';
 
+  // --- STYLE FUNCTION (visited + unvisited colours) ---
+function style_Churches_3_0(feature, state = "normal") {
+    return {
+        pane: 'pane_Churches_3',
+        radius: getMarkerSize(feature, state),
+        opacity: 1,
+        color: getMarkerOutline(feature, state),
+        weight: 2.0,
+        fill: true,
+        fillOpacity: 1,
+        fillColor: getMarkerColor(feature, state),
+        interactive: true,
+    };
+}
+
+
+			function getMarkerSize(feature, state) {
+    // state = "normal", "hover", "active"
+    if (state === "hover") return 7.5;
+    if (state === "active") return 8.5;
+    return 5.2; // normal
+}
+
+function getMarkerColor(feature, state) {
+    const visited = getVisited().includes(feature.properties.fid);
+
+    if (state === "active") {
+        return visited ? "#00ff55" : "#ff4455"; // brighter when active
+    }
+
+    return visited ? "#00cc44" : "#bb1a24"; // normal fill
+}
+
+function getMarkerOutline(feature, state) {
+    const visited = getVisited().includes(feature.properties.fid);
+
+    if (state === "active") {
+        return visited ? "#009933" : "#aa0000"; // darker outline when active
+    }
+
+    return visited ? "#006600" : "#7a0000"; // normal outline
+}
+
+
+// --- CHURCHES LAYER ---
+map.createPane('pane_Churches_3');
+map.getPane('pane_Churches_3').style.zIndex = 403;
+map.getPane('pane_Churches_3').style['mix-blend-mode'] = 'normal';
+
 var layer_Churches_3 = new L.geoJson(json_Churches_3, {
     attribution: '',
     interactive: true,
@@ -436,6 +485,42 @@ layer.on("click", function() {
         return L.circleMarker(latlng, style_Churches_3_0(feature));
     }
 });
+
+bounds_group.addLayer(layer_Churches_3);
+map.addLayer(layer_Churches_3);
+			map.on("click", function() {
+    document.getElementById("infoPanel").style.bottom = "-400px";
+    window.activeChurch = null;
+
+    layer_Churches_3.eachLayer(function(l) {
+        l.setStyle(style_Churches_3_0(l.feature, "normal"));
+    });
+});
+
+</script>
+
+<div id="infoPanel" style="
+    position: fixed;
+    bottom: -400px;
+    left: 0;
+    right: 0;
+    background: white;
+    padding: 30px;
+    border-top: 2px solid #ccc;
+    transition: bottom 0.3s ease;
+    z-index: 9999;
+">
+    <h2 id="churchName"></h2>
+
+    <button id="visitBtn">Mark as visited</button>
+    <button id="directionsBtn">Directions</button>
+
+    <div id="churchDiocese" style="margin-top: 12px; font-size: 16px;"></div>
+    <div id="churchParish" style="margin-top: 4px; font-size: 16px;"></div>
+</div>
+
+</body>
+</html>
 
 bounds_group.addLayer(layer_Churches_3);
 map.addLayer(layer_Churches_3);
