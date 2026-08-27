@@ -359,61 +359,54 @@ layer.on("click", function() {
             feature.properties.name || "Unnamed Church";
 
         // Diocese + parish
-            const diocese = feature.properties.diocese_min;
-            const parish = feature.properties.parish_min;
+        const diocese = feature.properties.diocese_min;
+        const parish = feature.properties.parish_min;
 
-            document.getElementById("churchDiocese").innerText =
-                diocese ? `Diocese: ${diocese}` : "Diocese: Unknown";
+        document.getElementById("churchDiocese").innerText =
+            diocese ? `Diocese: ${diocese}` : "Diocese: Unknown";
 
-            document.getElementById("churchParish").innerText =
-                parish ? `Parish: ${parish}` : "Parish: Unknown";
+        document.getElementById("churchParish").innerText =
+            parish ? `Parish: ${parish}` : "Parish: Unknown";
 
-            // Button text
+        // Button text
+        if (getVisited().includes(feature.properties.fid)) {
+            document.getElementById("visitBtn").innerText = "Mark as unvisited";
+        } else {
+            document.getElementById("visitBtn").innerText = "Mark as visited";
+        }
+
+        // --- VISIT TOGGLE ---
+        document.getElementById("visitBtn").onclick = () => {
+
             if (getVisited().includes(feature.properties.fid)) {
-                document.getElementById("visitBtn").innerText = "Mark as unvisited";
+                unvisit(feature.properties.fid);
             } else {
-                document.getElementById("visitBtn").innerText = "Mark as visited";
+                markVisited(feature.properties.fid);
             }
 
-            // --- VISIT TOGGLE ---
-            document.getElementById("visitBtn").onclick = () => {
+            // FULL STYLE UPDATE (fill + outline)
+            layer.setStyle(style_Churches_3_0(feature));
 
-                if (getVisited().includes(feature.properties.fid)) {
-                    unvisit(feature.properties.fid);
-                } else {
-                    markVisited(feature.properties.fid);
-                }
+            // Update button text
+            document.getElementById("visitBtn").innerText =
+                getVisited().includes(feature.properties.fid)
+                    ? "Mark as unvisited"
+                    : "Mark as visited";
+        };
 
-                // FULL STYLE UPDATE (fill + outline)
-                layer.setStyle(style_Churches_3_0(feature));
+        // Directions
+        document.getElementById("directionsBtn").onclick = () => {
+            let lat = feature.geometry.coordinates[1];
+            let lng = feature.geometry.coordinates[0];
+            window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`);
+        };
 
-                // Update button text
-                document.getElementById("visitBtn").innerText =
-                    getVisited().includes(feature.properties.fid)
-                        ? "Mark as unvisited"
-                        : "Mark as visited";
-        
-
-        // Slide panel up again
+        // Slide panel UP again (correct place)
         document.getElementById("infoPanel").style.bottom = "0px";
 
     }, 150); // small delay for smooth animation
 });
 
-
-            
-
-            // Directions
-            document.getElementById("directionsBtn").onclick = () => {
-                let lat = feature.geometry.coordinates[1];
-                let lng = feature.geometry.coordinates[0];
-                window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`);
-            };
-
-            // Slide panel up
-            document.getElementById("infoPanel").style.bottom = "0px";
-        });
-    },
 
     // --- MARKER SHAPE ---
     pointToLayer: function (feature, latlng) {
