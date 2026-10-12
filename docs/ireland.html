@@ -1,79 +1,73 @@
+```html
 <!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Ireland</title>
 
-    <!-- Montserrat font -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 
     <style>
-        body {
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
             margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
             font-family: Montserrat, sans-serif;
         }
 
-        main {
-            padding: 40px;
-            font-size: 18px;
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
         }
-        ```css
-html, body {
-    margin: 0;
-    height: 100%;
-}
 
-body {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    overflow: hidden;
-}
+        #header, #footer {
+            flex-shrink: 0;
+        }
 
-#header, #footer {
-    flex-shrink: 0;
-}
+        main {
+            flex: 1;
+            min-height: 0;
+            min-width: 0;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
 
-main {
-    flex: 1;
-    min-height: 0;
-    overflow: hidden;
-}
-
-main iframe {
-    width: 100%;
-    height: 100%;
-    display: block;
-    border: none;
-}
-```
+        main iframe {
+            width: 100%;
+            height: 100%;
+            display: block;
+            border: none;
+        }
     </style>
 </head>
 
 <body>
 
-    <!-- Header placeholder -->
+    <!-- Header -->
     <div id="header"></div>
 
-    <!-- Main content (blank for now) -->
-   <main style="padding:0; margin:0; height:calc(100vh - 50px);">
-    <iframe 
-        src="MapFolder/index.html"
-        style="border:none; width:100%; height:100%; display:block;"
-        loading="lazy"
-    ></iframe>
-       ```html
-</main>
+    <!-- Map -->
+    <main>
+        <iframe
+            src="MapFolder/index.html"
+            title="Map of Ireland"
+            loading="lazy">
+        </iframe>
+    </main>
 
-
-
-
-
-    <!-- Footer placeholder -->
+    <!-- Footer -->
     <div id="footer"></div>
 
-    <!-- Load header + footer -->
+    <!-- Load header and footer -->
     <script>
         fetch("header.html")
             .then(r => r.text())
@@ -86,3 +80,4 @@ main iframe {
 
 </body>
 </html>
+```
