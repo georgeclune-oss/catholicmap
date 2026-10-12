@@ -38,8 +38,8 @@
 
        .section-title {
     text-align: center;
-    margin-top: 40px;   /* NEW: spacing from header */
-    margin-bottom: 10px;
+    margin-top: 0px;   /* NEW: spacing from header */
+    margin-bottom: 0px;
     font-size: 26px;
     font-weight: bold;
 }
