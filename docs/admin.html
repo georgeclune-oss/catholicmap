@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Church</title>
+</head>
+<body>
+
+<h1>Add Church</h1>
+
+<form id="churchForm">
+    <input id="name" placeholder="Church Name" required><br><br>
+
+    <input id="lat" placeholder="Latitude" required><br><br>
+
+    <input id="lon" placeholder="Longitude" required><br><br>
+
+    <input id="diocese" placeholder="Diocese"><br><br>
+
+    <input id="parish" placeholder="Parish"><br><br>
+
+    <button type="submit">Generate Church</button>
+</form>
+
+<pre id="output"></pre>
+
+<script>
+document.getElementById("churchForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const church = {
+        name: document.getElementById("name").value,
+        lat: parseFloat(document.getElementById("lat").value),
+        lon: parseFloat(document.getElementById("lon").value),
+        diocese: document.getElementById("diocese").value,
+        parish: document.getElementById("parish").value
+    };
+
+    document.getElementById("output").textContent =
+        JSON.stringify(church, null, 2);
+});
+</script>
+
+</body>
+</html>
