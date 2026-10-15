@@ -423,6 +423,27 @@ var layer_Churches_3 = new L.geoJson(json_Churches_3, {
 
 bounds_group.addLayer(layer_Churches_3);
 map.addLayer(layer_Churches_3);
+			fetch("churches.json")
+  .then(r => r.json())
+  .then(data => {
+
+    data.forEach(church => {
+
+      L.circleMarker(
+        [church.lat, church.lon],
+        {
+          radius: 5,
+          color: "#7a0000",
+          fillColor: "#d5003c",
+          fillOpacity: 1
+        }
+      )
+      .addTo(map)
+      .bindPopup(church.name);
+
+    });
+
+  });
 			map.on("click", function() {
     document.getElementById("infoPanel").style.bottom = "-400px";
     window.activeChurch = null;
