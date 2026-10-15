@@ -1,7 +1,9 @@
-{
-  "name": "Star of the Sea",
-  "lat": 52.90187222925898,
-  "lon": -6.0501654030049465,
-  "diocese": "Dublin",
-  "parish": "Kilbride"
-}
+[
+  {
+    "name": "Star of the Sea",
+    "lat": 52.90187222925898,
+    "lon": -6.0501654030049465,
+    "diocese": "Dublin",
+    "parish": "Kilbride"
+  }
+]
