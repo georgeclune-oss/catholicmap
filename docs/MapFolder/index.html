@@ -198,12 +198,7 @@ function visitedColor(fid) {
     maxZoom: 19
   }
 );
-map.on('click', function(e) {
-    alert(
-        "Lat: " + e.latlng.lat +
-        "\nLon: " + e.latlng.lng
-    );
-});
+
 map.on('click', function() {
     document.getElementById('infoPanel').style.bottom = "-400px";
 });
